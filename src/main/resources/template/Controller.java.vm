@@ -1,0 +1,97 @@
+package ${package}.${moduleName}.controller;
+
+import java.util.Map;
+
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.web.bind.annotation.*;
+import ${package}.${moduleName}.entity.${className};
+import ${package}.${moduleName}.service.${className}Service;
+import com.suke.czx.common.utils.R;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import com.suke.czx.common.annotation.SysLog;
+import com.suke.czx.common.annotation.ResourceAuth;
+import com.suke.czx.common.base.AbstractController;
+
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+@RestController
+@AllArgsConstructor
+@RequestMapping("/${moduleName}/${requestMapping}")
+@Tag(name = "${className}Controller", description = "${comments}")
+public class ${className}Controller extends AbstractController {
+    private final ${className}Service ${classname}Service;
+
+    /**
+     * 列表
+     */
+    @GetMapping("/list")
+    @ResourceAuth(value = "${comments}列表", module = "${comments}")
+    public R list(@RequestParam Map<String, Object> params) {
+        //查询列表数据
+        QueryWrapper<${className}> queryWrapper = new QueryWrapper<>();
+        final String keyword = mpPageConvert.getKeyword(params);
+        if (StrUtil.isNotEmpty(keyword)) {
+
+        }
+        IPage<${className}> listPage = ${classname}Service.page(mpPageConvert.<${className}>pageParamConvert(params), queryWrapper);
+        return R.ok().setData(listPage);
+    }
+
+
+    /**
+     * 新增${comments}
+     */
+    @SysLog("新增${comments}数据")
+        #if($useRestful)
+        @PutMapping("/${requestMapping}")
+        #else
+        @PostMapping("/save")
+        #end
+    @ResourceAuth(value = "新增${comments}数据", module = "${comments}")
+    public R save(@RequestBody ${className} param) {
+            ${classname}Service.save(param);
+        return R.ok();
+    }
+
+
+    /**
+     * 修改
+     */
+    @SysLog("修改${comments}数据")
+        #if($useRestful)
+        @PutMapping("/${requestMapping}")
+        #else
+        @PostMapping("/update")
+        #end
+    @ResourceAuth(value = "修改${comments}数据", module = "${comments}")
+    public R update(@RequestBody ${className} param) {
+            ${classname}Service.updateById(param);
+        return R.ok();
+    }
+
+
+    /**
+     * 删除
+     */
+    @SysLog("删除${comments}数据")
+        #if($useRestful)
+        @DeleteMapping("/${requestMapping}")
+        #else
+        @PostMapping("/delete")
+        #end
+    @ResourceAuth(value = "删除${comments}数据", module = "${comments}")
+    public R delete(@RequestBody ${className} param) {
+            ${classname}Service.removeById(param.get${pk.attrName}());
+        return R.ok();
+    }
+
+}
