@@ -24,6 +24,7 @@
         <velocity.version>1.7</velocity.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <qiniu.version>7.12.1</qiniu.version>
+        <mongodb.version>5.5.1</mongodb.version>
     </properties>
 
     <dependencyManagement>
@@ -129,6 +130,44 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+        <!-- 引入适配 Spring Boot 3.x 的 MongoDB 驱动 -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>${mongodb.version}</version>
+        </dependency>
+        <!-- 引入同版本的 bson（必须和驱动版本一致） -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>bson</artifactId>
+            <version>${mongodb.version}</version>
+        </dependency>
+
+        <!-- 依赖声明中不指定版本，由 BOM 自动控制为 3.5.12 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.3</version> <!-- velocity 不属于 MyBatis-Plus，需保留版本 -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>3.2.4</version> <!-- 关键：使用 3.x 版本 -->
         </dependency>
 
     </dependencies>
